@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Студия Shorts</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <p class="eyebrow">Minecraft Shorts</p>
+      <h1>Студия</h1>
+      <p id="who" class="who">Открой из Telegram-бота.</p>
+    </header>
+
+    <section class="card" id="status-card">
+      <div class="row">
+        <h2>Сборка</h2>
+        <span id="percent">0%</span>
+      </div>
+      <div class="bar"><div id="bar"></div></div>
+      <p id="detail">Жду ролик или задачу.</p>
+      <ol id="log"></ol>
+    </section>
+
+    <section class="card">
+      <h2>Музыка</h2>
+      <div class="choices" id="music">
+        <button type="button" data-value="phonk" class="on">Фонк</button>
+        <button type="button" data-value="trap">Трэп</button>
+        <button type="button" data-value="epic">Эпик</button>
+        <button type="button" data-value="lofi">Лоуфай</button>
+        <button type="button" data-value="none">Без музыки</button>
+      </div>
+      <div class="choices" id="part">
+        <button type="button" data-value="full" class="on">Весь трек</button>
+        <button type="button" data-value="drop">Важный момент</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Эффект</h2>
+      <div class="choices" id="effect">
+        <button type="button" data-value="none" class="on">Без эффекта</button>
+        <button type="button" data-value="zoom">Зум</button>
+        <button type="button" data-value="flash">Вспышка</button>
+        <button type="button" data-value="shake">Тряска</button>
+        <button type="button" data-value="contrast">Контраст</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Что изменить</h2>
+      <textarea id="request" rows="3" placeholder="Например: добавь фонк и зум, нарежь другие моменты, убери музыку"></textarea>
+      <button type="button" id="send" class="send">Собрать и отправить боту</button>
+      <p class="hint">Свой MP4 отправь сообщением в чат бота, до 20 МБ. Готовый ролик придёт туда же. Нижняя кнопка «Студия» отправляет задачу, кнопка у поля ввода показывает ход сборки.</p>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+:root {
+  color-scheme: dark;
+  --bg: #17160f;
+  --card: #242218;
+  --line: #3c3828;
+  --text: #f4ecd8;
+  --muted: #b7ae96;
+  --gold: #e2b657;
+  --grass: #6ea84a;
+  --grass-dark: #3e6b2c;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top, #2c291c 0, var(--bg) 42%);
+  color: var(--text);
+  font: 16px/1.4 "Segoe UI", sans-serif;
+}
+
+main {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: var(--gold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+h1 { margin: 4px 0; font-size: 34px; }
+
+h2 { margin: 0; font-size: 18px; }
+
+.who, .hint, #detail { color: var(--muted); }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 14px;
+  margin-top: 12px;
+}
+
+.row, .choices {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.choices {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 10px;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  background: #333024;
+  color: var(--text);
+  font: inherit;
+}
+
+button.on {
+  background: var(--grass-dark);
+  color: #f4ffe8;
+}
+
+.send {
+  width: 100%;
+  margin-top: 12px;
+  background: var(--gold);
+  color: #2a220d;
+  font-weight: 700;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: #15140e;
+  color: var(--text);
+  padding: 12px;
+  font: inherit;
+  resize: vertical;
+}
+
+.bar {
+  height: 10px;
+  margin: 10px 0;
+  border-radius: 999px;
+  background: #12110c;
+  overflow: hidden;
+}
+
+#bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--grass-dark), var(--grass));
+}
+
+#percent { color: var(--gold); font-variant-numeric: tabular-nums; }
+
+#log {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+}
+
+#log li { margin: 4px 0; }
