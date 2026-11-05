@@ -188,6 +188,17 @@ document.getElementById("chat-form").addEventListener("submit", async (event) =>
   const text = document.getElementById("chat-text").value.trim();
   if (!text) return;
   document.getElementById("chat-text").value = "";
+  const onPages = location.hostname.endsWith("github.io");
+  if (onPages && tg && tg.sendData) {
+    try {
+      tg.sendData(JSON.stringify({ text }));
+      document.getElementById("detail").textContent = "Отправил боту. Ответ придёт в чат Telegram.";
+      return;
+    } catch (error) {
+      document.getElementById("detail").textContent = "Открой студию нижней кнопкой «Студия» и отправь ещё раз. Ответ придёт в чат бота.";
+      return;
+    }
+  }
   try {
     await api("/api/chat", {
       method: "POST",
