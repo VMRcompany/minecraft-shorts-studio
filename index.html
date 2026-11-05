@@ -5,59 +5,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Студия Shorts</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="config.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
     <header>
       <p class="eyebrow">Minecraft Shorts</p>
-      <h1>Студия</h1>
-      <p id="who" class="who">Открой из Telegram-бота.</p>
+      <h1 id="title">Студия</h1>
     </header>
 
-    <section class="card" id="status-card">
-      <div class="row">
-        <h2>Сборка</h2>
-        <span id="percent">0%</span>
-      </div>
-      <div class="bar"><div id="bar"></div></div>
-      <p id="detail">Жду ролик или задачу.</p>
-      <ol id="log"></ol>
+    <section class="panel on" id="panel-home">
+      <article class="card">
+        <h2>Токены</h2>
+        <p id="token-name">Проверяю ключ Cursor...</p>
+        <p id="token-note" class="muted"></p>
+        <p id="token-count"></p>
+      </article>
+      <article class="card">
+        <h2>История</h2>
+        <ol id="history"></ol>
+      </article>
     </section>
 
-    <section class="card">
-      <h2>Музыка</h2>
-      <div class="choices" id="music">
-        <button type="button" data-value="phonk" class="on">Фонк</button>
-        <button type="button" data-value="trap">Трэп</button>
-        <button type="button" data-value="epic">Эпик</button>
-        <button type="button" data-value="lofi">Лоуфай</button>
-        <button type="button" data-value="none">Без музыки</button>
-      </div>
-      <div class="choices" id="part">
-        <button type="button" data-value="full" class="on">Весь трек</button>
-        <button type="button" data-value="drop">Важный момент</button>
-      </div>
+    <section class="panel" id="panel-chat">
+      <article class="card chat-card">
+        <div id="messages"></div>
+        <form id="chat-form">
+          <textarea id="chat-text" rows="2" placeholder="Напиши боту: найди шортс, возьми 1, поправь хук"></textarea>
+          <button type="submit" class="send">Отправить</button>
+        </form>
+      </article>
     </section>
 
-    <section class="card">
-      <h2>Эффект</h2>
-      <div class="choices" id="effect">
-        <button type="button" data-value="none" class="on">Без эффекта</button>
-        <button type="button" data-value="zoom">Зум</button>
-        <button type="button" data-value="flash">Вспышка</button>
-        <button type="button" data-value="shake">Тряска</button>
-        <button type="button" data-value="contrast">Контраст</button>
-      </div>
+    <section class="panel" id="panel-build">
+      <article class="card">
+        <h2>Основа</h2>
+        <div class="choices">
+          <button type="button" id="find-shorts" class="on">5 Shorts</button>
+          <button type="button" id="find-videos">5 видео</button>
+        </div>
+        <div id="trends"></div>
+      </article>
+      <article class="card">
+        <h2>Свой файл</h2>
+        <label class="file">
+          Загрузить MP4 или MP3
+          <input id="file" type="file" accept="video/mp4,video/*,audio/mpeg,audio/*">
+        </label>
+        <p class="muted">До 80 МБ. Файл уходит в студию, не в чат Telegram.</p>
+      </article>
+      <article class="card">
+        <div class="row">
+          <h2>Сборка</h2>
+          <span id="percent">0%</span>
+        </div>
+        <div class="bar"><div id="bar"></div></div>
+        <p id="detail" class="muted">Выбери ролик или загрузи файл.</p>
+        <video id="preview" controls hidden></video>
+      </article>
+      <article class="card">
+        <h2>Музыка и эффект</h2>
+        <div class="choices" id="music"></div>
+        <div class="choices" id="part">
+          <button type="button" data-value="full" class="on">Весь трек</button>
+          <button type="button" data-value="drop">Важный момент</button>
+        </div>
+        <div class="choices" id="effect">
+          <button type="button" data-value="none" class="on">Без эффекта</button>
+          <button type="button" data-value="zoom">Зум</button>
+          <button type="button" data-value="flash">Вспышка</button>
+          <button type="button" data-value="shake">Тряска</button>
+          <button type="button" data-value="contrast">Контраст</button>
+        </div>
+        <textarea id="request" rows="2" placeholder="Что изменить"></textarea>
+        <button type="button" id="render" class="send">Собрать здесь</button>
+      </article>
     </section>
 
-    <section class="card">
-      <h2>Что изменить</h2>
-      <textarea id="request" rows="3" placeholder="Например: добавь фонк и зум, нарежь другие моменты, убери музыку"></textarea>
-      <button type="button" id="send" class="send">Собрать и отправить боту</button>
-      <p class="hint">Свой MP4 отправь сообщением в чат бота, до 20 МБ. Готовый ролик придёт туда же. Нижняя кнопка «Студия» отправляет задачу, кнопка у поля ввода показывает ход сборки.</p>
+    <section class="panel" id="panel-profile">
+      <article class="card profile">
+        <img id="avatar" alt="">
+        <div>
+          <h2 id="profile-name">Профиль</h2>
+          <p id="profile-id" class="muted"></p>
+        </div>
+      </article>
+      <article class="card">
+        <h2>Устройства этого аккаунта</h2>
+        <p class="muted">Telegram не присылает модель телефона в обычном сообщении. Здесь видны устройства, с которых открывали студию, и отметки чата с ботом.</p>
+        <ul id="devices"></ul>
+      </article>
     </section>
   </main>
+  <nav>
+    <button type="button" data-panel="home" class="on">Главная</button>
+    <button type="button" data-panel="chat">Чат</button>
+    <button type="button" data-panel="build">Сборка</button>
+    <button type="button" data-panel="profile">Профиль</button>
+  </nav>
   <script src="app.js"></script>
 </body>
 </html>
