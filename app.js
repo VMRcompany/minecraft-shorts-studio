@@ -77,7 +77,22 @@ async function loadChat() {
   box.scrollTop = box.scrollHeight;
 }
 
+function localProfile() {
+  const user = (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) || {};
+  const name = [user.first_name || "", user.last_name || ""].join(" ").trim();
+  document.getElementById("profile-name").textContent = name || "Профиль";
+  document.getElementById("profile-id").textContent = user.id ? `ID ${user.id} ${user.username ? "@" + user.username : ""}` : "Открой студию из Telegram.";
+  if (user.photo_url) document.getElementById("avatar").src = user.photo_url;
+  const devices = document.getElementById("devices");
+  if (!devices.children.length && tg) {
+    const line = document.createElement("li");
+    line.textContent = `${tg.platform || "это устройство"} · сейчас`;
+    devices.appendChild(line);
+  }
+}
+
 async function loadProfile() {
+  localProfile();
   const user = tg && tg.initDataUnsafe && tg.initDataUnsafe.user;
   const data = await api("/api/profile");
   const profile = data.profile || {};
@@ -182,7 +197,11 @@ document.getElementById("chat-form").addEventListener("submit", async (event) =>
     await loadChat();
     await loadHome();
   } catch (error) {
-    document.getElementById("detail").textContent = error.message;
+    if (tg && tg.sendData) {
+      tg.sendData(JSON.stringify({ text }));
+      return;
+    }
+    document.getElementById("detail").textContent = "Чат студии не достучался до компьютера с ботом. Напиши это же сообщение в чат бота.";
   }
 });
 
@@ -241,7 +260,7 @@ document.getElementById("file").addEventListener("change", async (event) => {
     });
     await watchJob();
   } catch (error) {
-    document.getElementById("detail").textContent = error.message;
+    document.getElementById("detail").textContent = "Файл не ушёл в студию. Пришли MP4 сообщением в чат бота.";
   }
 });
 
@@ -270,6 +289,7 @@ async function boot() {
     tg.setHeaderColor("#17160f");
     tg.setBackgroundColor("#17160f");
   }
+  localProfile();
   if (!initData()) {
     document.getElementById("token-note").textContent = "Открой студию кнопкой в Telegram, иначе задачи не запустятся.";
     return;
@@ -287,7 +307,8 @@ async function boot() {
     });
     await Promise.all([loadHome(), loadChat(), loadProfile(), loadMusic()]);
   } catch (error) {
-    document.getElementById("token-note").textContent = error.message;
+    document.getElementById("token-note").textContent = "История и остаток задач лежат на компьютере с ботом. Пока он выключен или студия до него не достучалась, с телефона видны профиль и это устройство.";
+    localProfile();
   }
 }
 
